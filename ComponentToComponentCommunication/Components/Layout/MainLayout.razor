@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+@inject IProductServices productServices
+<PageTitle>ComponentToComponentCommunication</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <div class="hstack gap-2">
+                <i class="oi oi-cart text-danger">
+                    <span class="text-danger">My Cart[ @productServices.CartCount ]</span>
+                    <span class="text-primary">Product Count[ @productServices.ProductCount ]</span>
+                </i>
+            </div>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code{
+    protected override void OnInitialized()
+    {
+        productServices.ProductEvent += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        productServices.ProductEvent -= StateHasChanged;
+    }
+}

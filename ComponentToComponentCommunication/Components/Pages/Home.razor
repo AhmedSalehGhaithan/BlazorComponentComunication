@@ -1,0 +1,46 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject IProductServices productServices
+@implements IDisposable
+<div class="row">
+    @if(products.Count > 0)
+    {
+        @foreach (var item in products)
+        {
+            <div class="col-auto m-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="gap-2">
+                            <span>@item.Name</span>
+                            <button class="btn btn-outline-primary btn-sm" @onclick="() => AddProduct(item)">
+                                Add +
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<button class="btn btn-outline-primary m-3" @onclick="LoadData">Load Product</button>
+@code{
+    private List<Product> products { get; set; } = new();
+    private void LoadData()
+    {
+        productServices.LoadProduct();
+        products = productServices.Products;
+    }
+    private void AddProduct(Product product)
+    {
+        productServices.AddToCart(product);
+    }
+    protected override void OnInitialized()
+{
+        productServices.ProductEvent += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        productServices.ProductEvent -= StateHasChanged;
+    }
+}

@@ -1,0 +1,33 @@
+﻿@page "/"
+@rendermode InteractiveServer
+<div class="row">
+    @if(_products.Count > 0)
+    {
+        foreach (var item in _products)
+        {
+            <Display name="@item.Name" />
+        }
+    }
+    @if(_product.Name is not null)
+    {
+        <Display name="@_product.Name" />
+    }
+</div>
+
+<ChiledPage HandelSendProductListEvent="ReciveProductList" 
+    HandelSendProductEvent="ReciveProduct"></ChiledPage>
+
+@code {
+    public List<Product> _products { get; set; } = new();
+    public Product _product { get; set; } = new();
+
+    private void ReciveProductList(List<Product> products)
+    {
+        _products = products;
+    }
+    private void ReciveProduct(Product product)
+    {
+        _product = product;
+    }
+
+}

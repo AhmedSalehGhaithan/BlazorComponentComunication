@@ -1,0 +1,27 @@
+﻿@page "/"
+<h3>Parent</h3>
+<Child Products="produccts" product="producct" />
+
+@code {
+    private List<Product> produccts { get; set; } = new();
+    private Product producct { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        produccts = new()
+        {
+            new Product(){Name = "Phone",Id=3},
+            new Product(){Name = "Labtop"},
+            new Product(){Name = "Bag"},
+            new Product(){Name = "Computer"},
+            new Product(){Name = "Wireless"},
+            new Product(){Name = "pen"},
+            new Product(){Name = "pencil"},
+            new Product(){Name = "Car"},
+            new Product(){Name = "money"},
+            new Product(){Name = "door"},
+            new Product(){Name = "anything"},
+        };
+        producct = new Product() { Id = 1, Name = "New Product" };
+    }
+}

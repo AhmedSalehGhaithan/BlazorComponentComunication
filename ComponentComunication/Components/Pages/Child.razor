@@ -1,0 +1,33 @@
+﻿<h3>Child</h3>
+<div class="container">
+    <div class="row">
+        @if(Products.Count > 0)
+        {
+            foreach (var item in Products)
+            {
+                tempString = @item.Name!;
+                <Display name="@tempString" />
+            }
+        }
+    </div>
+    <div class="row">
+        <div class="col-auto m-2">
+            <div class="card">
+                <div class="card-header">
+                    <span>ID:@product.Id, Name: @product.Name</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+@code {
+    [Parameter]
+    public List<Product> Products { get; set; } = new();
+    [Parameter]
+    public Product product { get; set; } = new();
+
+    public string? tempString { get; set; } = null;
+    public int tempID { get; set; }
+}

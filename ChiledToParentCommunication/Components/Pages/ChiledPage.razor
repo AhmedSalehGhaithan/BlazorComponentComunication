@@ -1,0 +1,44 @@
+﻿@rendermode InteractiveServer
+
+<button class="btn btn-outline-primary m-3" @onclick="SendProductToList">
+    Receive Product List
+</button>
+<button class="btn btn-outline-primary m-3" @onclick="SendProduct">
+    Receive single Product 
+</button>
+
+@code {
+    [Parameter]
+    public EventCallback<List<Product>>HandelSendProductListEvent { get; set; }
+
+    [Parameter]
+    public EventCallback<Product>HandelSendProductEvent { get; set; }
+
+    private List<Product> MyProducts { get; set; } = new();
+
+    private Product MyProduct { get; set; } = new();
+
+    private  async Task SendProductToList()
+    {
+        MyProducts = new()
+        {
+            new Product(){Name = "Phone",Id=3},
+            new Product(){Name = "water"},
+            new Product(){Name = "Bag"},
+            new Product(){Name = "Computer"},
+            new Product(){Name = "Wireless"},
+            new Product(){Name = "pen"},
+            new Product(){Name = "pencil"},
+            new Product(){Name = "Car"},
+            new Product(){Name = "money"},
+            new Product(){Name = "door"},
+            new Product(){Name = "anything"},
+        };
+        await HandelSendProductListEvent.InvokeAsync(MyProducts);
+    }
+    private async Task SendProduct()
+    {
+        MyProduct = new Product() { Id = 9, Name = "SingleProduct" };
+        await HandelSendProductEvent.InvokeAsync(MyProduct);
+    }
+}
